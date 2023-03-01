@@ -1,6 +1,7 @@
 CPATH=".;hamcrest-core-1.3.jar;junit-4.13.2.jar"
 
 rm *.class
+rm *.txt
 rm ListExamples.java
 rm -rf student-submission
 git clone $1 student-submission
@@ -23,11 +24,16 @@ then
     exit 1
 fi
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > test-output.txt
-
+grep "Failures: " test-output.txt > grep-results.txt
 if [[ `grep -c "Failures: " test-output.txt` -ne 0 ]]
 then 
+    TOTAL=`cut -b 12 grep-results.txt`
+    FAILED=`cut -b 26 grep-results.txt`
+    SCORE=`awk "BEGIN {print $FAILED / $TOTAL}"`
+    FINALSTRING="Score : "
+    FINALSTRING+=$SCORE
     echo "Not all tests passed"
-    echo "Score : 0"
+    echo $FINALSTRING
     cat test-output.txt
     exit 1
 else   
