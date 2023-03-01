@@ -1,4 +1,4 @@
-CPATH=".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar"
+CPATH=".;hamcrest-core-1.3.jar;junit-4.13.2.jar"
 
 rm *.class
 rm ListExamples.java
